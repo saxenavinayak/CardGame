@@ -14,7 +14,7 @@
 
 <a name="description"></a>
 ## Description
-Hydra is a card game I developed to demonstrate my knowlegde of coding standards and object oriented programming in a fun way.
+Hydra is a card game I developed to demonstrate my knowledge of coding standards and object oriented programming in a fun way.
 I programming this C++ application with design patterns, modern C++ features like smart pointers 
 and object oriented design principles (encapsulation, inheritance, abstraction, and polymorphism). 
 Due to how uncommon the game is, I've included how to play the game below and a demonstration with pictures.
