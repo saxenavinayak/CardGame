@@ -1,47 +1,117 @@
-# CLI Card Game
-A project built to practice OOP principles (encapsulation, abstraction, inheritance, polymorphism). Observer design pattern was used to implement the classes.
+<div align="center">
 
-### Design diagram
-A detailed description of each class is available below.
-![image](design.png)
+# Hydra Card Game
 
-### Demo
-Demo is available [here](https://drive.google.com/file/d/1F4WbZJXN0VNt8NF0UE5Gfml7PTMzKi6R/view?usp=sharing)
+</div>
 
-### Overview
-#### Classes Used
+# Table of Contents
+
+- [Description](#description)
+- [UML Diagram](#uml-diagram)
+- [How to Play](#how-to-play)
+- [Additional Features](#additional-features)
+- [Demo](#demo)
+
+<a name="description"></a>
+## Description
+Hydra is a card game I developed to demonstrate my knowlegde of coding standards and object oriented programming in a fun way.
+I programming this C++ application with design patterns, modern C++ features like smart pointers 
+and object oriented design principles (encapsulation, inheritance, abstraction, and polymorphism). 
+Due to how uncommon the game is, I've included how to play the game below and a demonstration with pictures.
+
+<a name="uml-diagram"></a>
+## UML Diagram
+![](Images/Hydra_UML.png)
+
+<a name="how-to-play"></a>
+## How to Play
+
+### Set up
+To set up, one needs as many standard 54-card decks as there are players, which are shuﬄed together and then distributed equally to each player, face down in a pile. 
+This pile is each player’s draw pile, and each player additionally has a discard pile, which starts empty, and a reserve that can only hold one card during the player's turn. 
+To start the game, the ﬁrst player places a single card from the top of their draw pile face up in the center of the table, creating the ﬁrst “head”. 
+From there, play proceeds clockwise. 
+
+### Rules
+The objective of the game is to be the first player to have no cards in your discard pile, draw pile or reserve. 
+For each turn one must draw and play as many cards as there are heads in the middle of the table, unless an action ends the turn early. 
+
+To play a card, the player draws it from the top of the player’s draw pile, and performs an action with it. 
+If the player’s draw pile is empty, the player must ﬁrst shuﬄe their discard pile to form a new draw pile, then draw from that. 
+If the player’s draw and discard piles are both empty, but they have a reserve, then the turn ends immediately and the reserve is placed back into the discard pile. 
+
+The following are all possible actions once a card is drawn:
+1. If the value of the card is less than the value of the top card of any head, the card may be placed, face-up on that head.
+2. If the value of the card is equal to the face value of the top card of any head, the card may be placed, face up, on that head, but this ends the player’s turn immediately, and they draw no further cards.
+3. If the value of the card is greater than the value of the top card on all the heads, it can not be played. This means you pick up the oldest head card pile (along with your card in hand) and add it to your discard pile. 
+Then you take the top two cards of your draw pile and set them face up in the middle as two new heads (essentially "splitting the head", hence the name Hydra). Finally, this immediately ends your turn.
+4. If the player has no card in reserve, and there is more than one head, they may place this card into reserve. To do so, the player simply places the card, face down, in front of them. Note that this counts as an action.
+5. If the player has a reserve, then the player may swap the played card for the reserve card. Note that swapping does not count as an action and you may do this as many times as you would like during a turn.
+
+At the end of every turn, if a card was put in reserve, then it is put in the discard pile.
+Therefore, it is not possible to have a card in hand or in reserve when it is not the player's turn.
+
+In terms of card values, 2 is the lowest value and K is the highest value (suit does not matter).
+Aces may be placed on top of any card and any card may be placed on top of an ace.
+Finally, if the card played is a joker then the player chooses its value, as long as it can be played on the chosen head. 
+
+### Miscellaneous
+
+You may not split a head if it is possible for you to play, this includes choosing a joker value that can't be played. 
+However, you can swap with your reserve so that the card you are holding in hand forces you to split a head.
+If the first card when creating a head happens to be a joker, then it is taken to have the value 2.
+It is not possible to win on a turn you have put a card in reserve because you can only swap after that so there will always be a card in reserve that can't be played in the turn.
+Finally, one house rule I added was that if the suit of your card matches the suit of the head's top card you can play it regardless of the value. 
+
+### Interface
+
+Before every action you will be given updated information about the heads including the top card and the number of cards in each pile. 
+Then you will be updated on player information including the number of cards left, number in draw pile, number in discard, if a card is in hand, number of cards still to be drawn and if a card is in reserve. 
+Each head will also include an identification number, so that you type that number to place your card there. You can type 0 and it will place your card in reserve if done for the first time and swap with reserve otherwise. 
+Finally, in testing you can provide: A, 2-10, J, Q, K, joker when prompted for the value and the following for suits: D, S, C, H.
+
+<a name="additional-features"></a>
+## Additional Features
+
+### House Rule
+
+I added a house rule that allows you to place a card if the suit of your card matches the suit of the head's top card.
+In order to make the rule optional, I added a feature to ask the players if they would like to toggle the house rules at the beginning of each turn.
+In this way, it is possible for the players to change their mind and dynamically change the rules without having to restart. 
+
+### Testing Mode
+
+You run the game with command line `-testing` to enter testing mode. With this feature you can choose the number of cards each player has and 
+every time a card is drawn, it will prompt the user to set the card's suit and value, reasking if given invalid responses. 
+This includes the first card played and when two cards are drawn to create new head piles. 
+I've included this feature to test all scenarios and ensure the game's full functionality. 
+
+<a name="demo"></a>
+## Demo 
+
+Note that the demo was done in testing mode and therefore the user will decide the card suit and value, which would not occur in a normal game. <br/>
+
+When run the program asks the user for the number of players, number of cards per deck and if they would like the house rules on, which we've decided not to have.
+
+![](Images/Hydra_Demo1.png) <br/><br/>
 
 
-**Play_Game:**:
-This is perhaps the most important class. It is entirely responsible for the operation of the game. It keeps track of which player’s turn it is, updates the heads, and the player cards as necessary. It is also responsible for reading in from input for the necessary moves by the player. If the game is
-in testing mode, it ensures that the user gets to choose the state of the board -- that is, the number of cards each player gets, and each player decides which card they wish to play. Once the game has finished, it outputs a prompt stating the winning player, and then exits.
+We have set the first card to be a joker, which is given a default value of 2 and then given ourselves an AS which can be placed normally since aces can be played on anything.
+Following this the player's turn is ended because there is one head and so the player only gets to draw and play one card.
+
+![](Images/Hydra_Demo2.png) <br/><br/>
+
+In the next image, we have first given ourselves a QS which is again less than the top card on the head and therefore can be played. 
+The next card we gave outselves is a KC, which is greater than a Q. Since it is not possible to play it splits the head and ends the turn, setting the top card of the next two heads as 5D and 3S. 
+
+![](Images/Hydra_Demo3.png) <br/><br/>
+
+This image demonstrates switching capabilities. First we draw a 3S, which we put in reserve and draw the next card which is a 9S. Now we have a card in reserve and one in hand so we can switch back and forth without it counting as a new card drawn. 
+
+![](Images/Hydra_Demo4.png) <br/><br/>
+
+In the final image player one plays his final card, such that his discard pile, draw pile and reserve are empty, making them the winner. 
+
+![](Images/Hydra_Demo5.png)
 
 
-**Board:**
-The board class is the backbone of all the other classes, “pulling them together”. It stores all the information of the game state: each player, the heads, and it is also responsible for using TextDisplay to print out the necessary output. It determines if the card being played by any player is valid, and the attempted head that it is being placed on actually exists. A map was used to store the heads (see Board.h). Although the original plan was to have a head class and store them in a vector, it quickly became difficult, since if a head was no longer in play the vector would require indexing. A much simpler solution was to utilize a dictionary, where each integer
-which is the head index is mapped to the head itself.
-
-
-**Player:**
-The Player class keeps track of each player and the cards that they have. It keeps the draw pile and the discard piles separate in a vector, as well as the current and reserve card in strings.
-Additionally, the corresponding methods in this class allow for modification of their deck as required, thus, it makes it easier for Play_Game to use this class to make any modification for
-each player. The number of functions required to implement this class was clearly underestimated. In order to ensure encapsulation, the classes other than Player did not have
-access to the vector of cards: so, every movement of a card required a method. These include getting the top card, switching the card, getting the card from reverse, changing any specific
-card, getting the size of their draw and discard piles, etc.
-
-
-**Base_print:**
-This class is the print class that Board uses to call all the methods from TextDisplay. TextDisplay inherits from Base_print. So, any changes to the printing function are quickly recoverable with minimal modifications.
-
-
-**TextDisplay:**
-The TextDisplay class is responsible for outputting the correct output in the correct format to the console. Depending on the action, Play_Game calls each separate function to output as desired. In detail, it will print the players, the heads in play, if a player is in winning state then the winning play, and the corresponding actions made by the player that requires input. This class is inherited publicly from Base_print which is associated with the board class (see Base_print.h).
-
-
-**Design:**
-Many techniques were used to make the game in this project. Firstly, to ensure encapsulation between player and it’s associated classes, it quickly became relevant to implement new
-functions in the movement of the cards. After producing the functions in the original UML plan, it became apparent that there are a lot more movements of the cards that are possible. Another
-technique used was to use map storage in the stl library. The original idea was to have a head class, and the board class would store a vector of those. However, this would introduce the fact
-that explicit memory management must be used, and the indexing of the heads would cause complications. So, a map was used as a dictionary, to assign the number of the head to each
-playing hand. This reduced the complication of having to erase each head in the destructor. In general, the Play_Game, Base_print, and the Player classes are associated with Board.
-Play_Game accesses information from Board to ensure operation of the game, which inherits Base_Print to make sure that the proper functions from TextDisplay are used for the correct
